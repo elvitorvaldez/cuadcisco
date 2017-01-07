@@ -1,0 +1,29 @@
+{
+    "name": "cuadcisco",
+    "description": "Applicación para el Control de Accesos",
+    "version": "1.0",
+    "homepage": "http://localhost/cuadcisco/",
+    "keywords": [
+        "zf2",
+        "mysql",
+        "soap"
+    ],
+    "license": "BSD",
+    "authors":[
+        {
+            "name": "Carlos Román",
+            "email": "croman@vsys.com",
+            "role": "Desarrollador"
+        }
+    ],
+    "support": {
+        "email": "croman@vsys.com"
+    },
+    "require": {
+        "php": ">=5.5",
+        "zendframework/zendframework": "2.4",
+        "zendframework/zftool": "dev-master",
+        "ramsey/uuid": "3.2.0",
+        "phpoffice/phpexcel": "1.8"
+    }
+}

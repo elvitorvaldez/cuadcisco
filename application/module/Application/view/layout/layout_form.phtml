@@ -1,0 +1,82 @@
+<?php echo $this->doctype();?>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Auth CUAD')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendName('apple-touch-fullscreen', 'content=yes')
+            ->appendName('apple-mobile-web-app-capable', 'content=yes')
+            ->appendName('apple-mobile-web-app-status-bar-style', 'content=black')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+            ->headLink(array('rel' => 'apple-touch-icon', 'href' => $this->basePath() . '/images/touch-icon-iphone.png'))
+            ->headLink(array('rel' => 'apple-touch-icon', 'href' => $this->basePath() . '/images/touch-icon-ipad.png', 'sizes' => '76x76'))
+            ->headLink(array('rel' => 'apple-touch-icon', 'href' => $this->basePath() . '/images/touch-icon-iphone-retina.png', 'sizes' => '120x120'))
+            ->headLink(array('rel' => 'apple-touch-icon', 'href' => $this->basePath() . '/images/touch-icon-ipad-retina.png', 'sizes' => '152x152'))
+            ->headLink(array('rel' => 'apple-touch-startup-image', 'href' => $this->basePath() . '/images/apple-touch-startup-image-320x460.png', 'media' => '(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)'))
+            ->headLink(array('rel' => 'apple-touch-startup-image', 'href' => $this->basePath() . '/images/apple-touch-startup-image-640x920.png', 'media' => '(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)'))
+            ->appendStylesheet(array('rel' => 'stylesheet', 'type' => 'text/css', 'href' => 'https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,300,300italic,900,500,500italic,700italic,900italic'))
+            ->appendStylesheet ($this->basePath('libs/bootstrap/css/bootstrap.min.css'))
+            ->appendStylesheet($this->basePath('libs/datatables/extensions/Responsive/css/responsive.bootstrap.min.css'))
+            ->appendStylesheet($this->basePath('libs/datatables/extensions/Responsive/css/responsive.dataTables.min.css'))
+            ->appendStylesheet($this->basePath('libs/datatables/media/css/dataTables.bootstrap.min.css'))    
+                   
+                
+            ->appendStylesheet($this->basePath('libs/font-awesome/css/font-awesome.min.css'))
+            ->appendStylesheet($this->basePath('libs/alertifyjs/css/alertify.min.css'))
+            ->appendStylesheet($this->basePath('libs/alertifyjs/css/themes/bootstrap.min.css'))
+            ->appendStylesheet($this->basePath('libs/spinkit/spinkit.css'))
+            ->appendStylesheet($this->basePath('css/login.css')); ?>
+
+    </head>
+    <body>
+
+        <noscript>
+            <div id='div_NOSCRIPT'>
+		<p>Para visualizar esta página correctamente, es necesario habilitar Javascript en tu navegador.</p>
+		<p><a href='http://www.enable-javascript.com/es/'>En este enlace encontrará instrucciones de cómo habilitarlo.</a></p>
+            </div>
+        </noscript>
+
+        <div class="vertical-center">
+            <div class="container">
+                <?php echo $this->content; ?>
+            </div> <!-- /container -->
+        </div>
+        
+        <?php 
+
+            if($action=='login'){
+               $this->headScript()->prependFile($this->basePath('js/login.js'));
+            }else if($action=='resetPassword'){
+                $this->headScript()->prependFile($this->basePath('js/reset-pass.js'));
+            }else if($action === 'applyReset'){
+                $this->headScript()->prependFile($this->basePath('js/apply-reset.js'));
+                $this->headScript()->prependFile($this->basePath('js/utilities.js'));
+            }
+        ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('libs/alertifyjs/alertify.min.js'))
+            ->prependFile($this->basePath('libs/jquery-validation/localization/messages_es.min.js'))
+            ->prependFile($this->basePath('libs/jquery-validation/jquery.validate.min.js'))
+            ->prependFile($this->basePath('libs/prefixfree.min.js'))
+                
+                
+                
+            ->prependFile($this->basePath('libs/bootstrap/js/bootstrap.min.js')) 
+            ->prependFile($this->basePath('libs/jquery/jquery-1.11.3.min.js'))
+            ->prependFile($this->basePath('libs/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('libs/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

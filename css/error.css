@@ -1,0 +1,34 @@
+body { 
+    font-family: 'Roboto', sans-serif;
+    background-color: #eee;
+}
+
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.error-actions {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.error-actions .btn { 
+    margin-right:10px; 
+}
+
+.btn:hover{
+    color:#FFFFFF;
+    background-image: none;
+    background-color: #178acc !important;
+    transition: all 0.5s ease-in-out;
+}
+
+footer{
+    padding: 15px;
+}
+
+footer #powerby{
+    width: 130px;
+    margin: auto;
+}

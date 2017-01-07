@@ -1,0 +1,222 @@
+<?php
+
+$url      = $this->url("home");
+$url_gc   = \str_replace("auth", "gestion_cuad", $url);
+$url_rep  = \str_replace("auth", "reportes", $url);
+$url_dir  = \str_replace("auth", "directorio", $url);
+$user     = $auth["userId"];
+$psw      = $auth["psw"];
+$group    = $auth["user_group"];
+$role     = $auth["role"];
+$root     = $auth["root"];
+$apps     = $lista;
+$fullName = $auth["firstName"] . " " . $auth["lastName"];
+?>
+<div class="jumbotron" id="jumbotronApps">
+    <h3>Bienvenid@, <?php
+echo $fullName;
+?></h3>
+    <p>A continuación te presentamos las aplicaciones a las que puedes acceder.</p>
+</div>
+
+
+<?php
+
+if ($role!="User") {
+?>
+
+<script lang="javascript">
+    document.getElementById('jumbotronApps').style.paddingTop = '0%';
+    document.getElementById('jumbotronApps').style.paddingBottom = '0px';
+    document.getElementById('jumbotronApps').style.height='30% !important';
+</script>
+
+   <div class="datagrid" id="datagridApps">
+					<table id="tableGrid" class="table table-responsive responsive table-stripe">
+						<thead>  
+							<tr>  
+								<th class="text-left">Nombre de la aplicación</th>  
+								<th class="text-center">Enlace Reportes</th>	
+                                                                <th class="text-center">Enlace Dashboard</th>	
+								    
+							</tr>
+						</thead>
+						<tbody>
+                            <?php
+  foreach ($apps as $myApp):
+?>
+							<tr>
+								<td><?php
+    echo $this->escapehtml($myApp['app_name']);
+?></td>
+                                                               
+                                                                <td>                                                                  
+                                                                <div style="float:left !important; margin-left:40% !important" class="btn btn-primary pull-right" onClick="muestraApp('<?php echo $myApp['app_name']; ?>');">Reportes</div>
+                                                                </td>
+                                                                <td>
+                                                                    <div style="float:left !important; margin-left:40% !important" class="btn btn-primary pull-right" onClick="muestraDash('<?php echo $myApp['app_name']; ?>');">Dashboard</div>
+                                                                </td>
+                                                              
+                                                                  
+							</tr>
+                            <?php
+  endforeach;
+?>
+						</tbody>
+                   </table>
+				</div> 
+
+
+<?php
+} if ($role=="User") {
+?><div class="row" id="rowApps"><?php
+  foreach ($apps as $myApp) {
+    
+?>
+
+
+ <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfi">
+                <img class="pull-right" src="<?php
+    echo $this->basePath("images/empresa_ico.png");
+?>" alt="Logo Empresa"/>
+           <h3 class="panel-title"><?php
+    echo $myApp['app_name'];
+?></h3>
+            </div>
+            <div class="panel-body">
+                <p>UCX <?php echo $myApp['app_name']; ?></p>                
+                <p><div class="btn btn-primary pull-right" onClick="muestraDash('<?php  echo $myApp['app_name'];?>');"/>Dashboard</div></p>
+                
+                <p><div class="btn btn-primary pull-right" style="margin-right:1%" onClick="muestraApp('<?php  echo $myApp['app_name'];?>');"/>Reportes</div></p>
+                 </div>
+        </div>
+    </div>
+   
+<?php
+  }
+?>
+</div>
+<?php
+}
+?>
+
+<iframe name="frameapp" id="frameapp" style="width:100%; height: 500px; display: none; position: relative;"> 
+</iframe>
+<!--<div class="oculta"></div>-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script languaje="javascript">
+
+    $( document ).ready(function() {
+
+     $('#tableGrid').DataTable( {
+			       /* "scrollX": true,*/     
+			        "language": {
+			                "sProcessing":     "Procesando...",
+			                "sLengthMenu":     "Mostrar _MENU_ registros",
+			                "sZeroRecords":    "No se encontraron resultados",
+			                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+			                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			                "sInfoPostFix":    "",
+			                "sSearch":         "Buscar:",
+			                "sUrl":            "",
+			                "sInfoThousands":  ",",
+			                "sLoadingRecords": "Cargando...",
+			                "oPaginate": {
+			                    "sFirst":    "Primero",
+			                    "sLast":     "Último",
+			                    "sNext":     "Siguiente",
+			                    "sPrevious": "Anterior"
+			                },
+			                "oAria": {
+			                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			                }
+			          }   
+			    } );
+
+   }); 
+    
+    
+    
+    var appCookie="";
+validateCookie(); 
+
+
+    function muestraApp(app)
+    {
+      var inicia = "height=1,width=1,top=0,left=0,resizable=NO,scrollbars=no,location=no";
+  
+      	nueva=window.open("functions/gotoapp?app="+app, 'Popup', inicia);
+
+    var myapp="https://ucx-"+app.toLowerCase()+".vsys.com/clarusipc/";
+
+    if (document.getElementById('datagridApps'))
+    {document.getElementById('datagridApps').style.display = 'none'; }
+     if (document.getElementById('rowApps'))
+    {document.getElementById('rowApps').style.display = 'none'; } 
+     document.getElementById('jumbotronApps').style.display = 'none';
+    var frameapp=document.getElementById('frameapp');
+    frameapp.style.display = 'block'; 
+    ('#dashboardNav').hide();
+    document.cookie = "appCookie="+app;    
+   
+    }
+
+    function muestraDash(app)
+    {
+      var inicia = "height=1,width=1,top=0,left=0,resizable=NO,scrollbars=no,location=no";
+  
+      	nueva=window.open("functions/gotodash?app="+app, 'Popup', inicia);
+
+    var myapp="https://ucx-"+app.toLowerCase()+".vsys.com/dashboard/";
+
+    if (document.getElementById('datagridApps'))
+    {document.getElementById('datagridApps').style.display = 'none'; }
+     if (document.getElementById('rowApps'))
+    {document.getElementById('rowApps').style.display = 'none'; } 
+     document.getElementById('jumbotronApps').style.display = 'none';
+    var frameapp=document.getElementById('frameapp');
+    frameapp.style.display = 'block'; 
+    document.cookie = "appCookie="+app+"/dashboard";    
+   
+    }
+
+
+
+function validateCookie(){
+    
+var cookies=document.cookie; 
+
+var cookieVal=cookies.split("=");
+var cookieVal2=cookies.split("/");
+appCookie=cookieVal[1];  
+dashCookie=cookieVal2[1];  
+
+if (appCookie.length>5)
+{
+    if (dashCookie=="dashboard")
+    {
+        var appCookie2=appCookie.split("/");
+      muestraDash(appCookie2[0]);
+    }
+    else
+    {
+        
+    muestraApp(appCookie);
+    }
+     document.getElementById('datagridApps').style.display = 'none'; 
+     document.getElementById('jumbotronApps').style.display = 'none'; 
+
+    var frameapp=document.getElementById('frameapp');
+     frameapp.style.display = 'block'; 
+ 
+}  
+}     
+    
+    
+</script>

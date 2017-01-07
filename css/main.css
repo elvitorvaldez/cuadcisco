@@ -1,0 +1,174 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9/03/2016, 01:19:26 PM
+    Author     : Roman
+*/
+
+body, html{    
+    font-family: 'Roboto', sans-serif;
+    font-size:14px;
+}
+
+html.noscroll {
+    position: fixed; 
+    overflow-y: scroll;
+    width: 100%;
+}
+
+*:hover{
+    transition: all 0.5s ease-in-out;
+}
+
+div.dataTables_wrapper div.dataTables_info{
+    white-space:normal !important;
+}
+
+.active a:hover{
+    cursor: default;
+}
+
+.navbar{
+    margin-bottom: 0;
+}
+
+.navbar-left{
+    margin-left: -15px;
+}
+
+.nav .current a{
+    color: #ffffff;
+    background-color: #178acc;
+    cursor: default;
+}
+
+.sk-fading-circle{
+    position: fixed !important;
+    bottom: 40px !important;
+    left: 50%;
+    width: 40px !important;
+}
+
+.ark_loader{
+    background: rgba(0,0,0,.2);
+    padding: 3px 7px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    color: #FFF;
+    text-align: center;
+    left: 0;        
+}
+
+.ark_loader  .innerLdr{
+    margin-right: 4px;
+}
+
+.ark_loader span:first-child{
+    margin-top: 20px;
+    color:#000 !important;
+}
+
+.btn-primary:hover{
+    background-image: none;
+    background-color: #178acc !important;
+}
+
+header img{
+    position: relative;
+}
+
+header img.pull-right{
+    max-width: 150px !important;
+    width: 100%;
+}
+
+header img.pull-left{
+    max-width: 225px !important;
+    width: 100%;
+}
+
+.button_export{
+    margin-bottom: 15px;
+}
+
+#contentPanel ul{
+    margin: 45px 0 15px 0;
+    text-align: justify;
+}
+
+#contentPanel ul li{
+    margin-bottom: 5px;
+}
+
+.datagrid>.dataTables_wrapper{
+    margin-top: 20px;
+}
+
+.actions button{
+    margin: 0 5px !important;
+}
+
+#emailbox{
+    margin-top: 35px !important;
+}
+
+#submitEmail{
+    margin-top: 15px;
+    width: 80px;
+}
+
+#submitEmail:hover{
+    background-image: none;
+    background-color: #178acc !important;
+    transition: all 0.5s ease-in-out;
+}
+
+.jumbotron{
+    margin-top: 35px;
+}
+
+table td{
+    word-break: break-word !important;
+}
+
+footer{
+    padding: 15px;
+}
+
+footer #powerby{
+    width: 130px;
+    margin: auto;
+}
+
+@media(max-width:768px) {
+    .row{
+        margin:0 !important;
+    }
+    .pagination{
+        margin: 20px 0 !important;
+    }
+}
+
+@media(max-width:414px) {
+    header img.pull-right{
+        max-width:106px !important;
+    }
+    header img.pull-left{
+        max-width:150px !important;
+    }
+}
+
+.oculta {
+    background: blue none repeat scroll 0 0;
+    height: 15px;
+    left: 797px;
+    position: absolute;
+    top: 149px;
+    width: 100px;
+}

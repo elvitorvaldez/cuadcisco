@@ -1,0 +1,149 @@
+<?php echo $this->doctype();?>
+<?php $fullName = $auth["firstName"] . " " . $auth["lastName"] ?>
+<?php 
+    $url_logs=\str_replace("auth", "logs", $this->url('home'));
+?>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('CUAD CISCO')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+       
+    </head>
+    <body>
+
+        <header>
+            <div class="clearfix">
+                <a onclick="limpiarCookie();" href="<?php echo $this->url('home');?>"><img class="img-responsive pull-right" src="<?php echo $this->basePath('images/telmex_logo.jpg'); ?>" alt="TELMEX"></a>
+                <a onclick="limpiarCookie();" href="<?php echo $this->url('home');?>"><img class="img-responsive pull-left" src="<?php echo $this->basePath('images/aplicativos_cuad.png'); ?>" alt="Aplicativos CUAD"></a>
+            </div>
+        </header>
+        <!-- Second navbar for categories -->
+        <nav class="navbar navbar-default">
+            <div class="">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden visible-xs" href="#">Menu</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li <?php echo ($controller === "Application\Controller\Index") ? 'class="active"' : ''; ?> onclick="limpiarCookie();"><a href="<?php echo $this->url('home'); ?>"><i class="fa fa-fw fa-dashboard"></i> Aplicaciones</a></li>
+                        <?php //if ( $auth["profile"] === "Aprovisionador" || $auth["profile"] === "Supervisor" || $auth["profile"] === "Gerente" || $auth["profile"] === "Auditor") { ?>
+<!--                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list-alt"></i> Logs<b class="caret"></b></a>
+                                <ul class="dropdown-menu" id="menu_logs">
+                                    <li id="liGestión">
+                                        <a href="//<?php echo $url_logs."?app=gestion_cuad" ?>" id="gestion_cuad_logs">
+                                            <img id="img_ico_Gestión" class="pull-left" src="images/gestion_cuad_ico.png" alt="Logo Gestión CUAD">
+                                            <img id="img_ico_Gestión_blank" class="pull-left hidden" src="images/gestion_cuad_ico_blank.png" alt="Logo Gestión CUAD">
+                                            &nbsp;&nbsp;Gestion CUAD
+                                        </a>
+                                    </li>
+                                    <li id="liDirectorio">
+                                        <a href="//<?php echo $url_logs."?app=directorio" ?>" id="directorio_logs">
+                                            <img id="img_ico_Directorio" class="pull-left" src="images/directorio_ico.png" alt="Logo Directorio CUAD">
+                                            <img id="img_ico_Directorio_blank" class="pull-left hidden" src="images/directorio_ico_blank.png" alt="Logo Directorio CUAD">
+                                            &nbsp;&nbsp;Directorio CUAD
+                                        </a>
+                                    </li>
+                                    <li id="liReportes">
+                                        <a href="//<?php echo $url_logs."?app=reportes" ?>" id="reportes_logs">
+                                            <img id="img_ico_Reportes" class="pull-left" src="images/reprotes_cuad_ico.png" alt="Logo Reportes CUAD">
+                                            <img id="img_ico_Reportes_blank" class="pull-left hidden" src="images/reprotes_cuad_ico_blank.png" alt="Logo Reportes CUAD">
+                                            &nbsp;&nbsp;Reportes CUAD
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>-->
+                        <?php //} ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fullName; ?><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+<!--                                <li<?php //echo ($controller == "Application\Controller\Users" && $action == "changePassword" ? ' class="active"' : ''); ?>>
+                                    <a href="<?php //echo $this->url('change-password'); ?>" id="change-password"><i class="fa fa-key fa-fw"></i> Contraseña</a>
+                                </li>-->
+                                <li>
+                                    <?php $role     = $auth["user_group"];
+                                    if ($role=="Administrators") {?>
+                                    <a href="<?php echo $this->url('controlpanel'); ?>"><i class="fa fa-fw fa-users"></i> Administración de usuarios</a>
+                                    <?php }?>
+                                    <a href="<?php echo $this->url('logout'); ?>"><i class="fa fa-fw fa-power-off"></i> Cerrar sesión</a>
+                                   
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container -->
+        </nav><!-- /.navbar -->
+
+        <div class="container container-fluid">
+            <?php echo $this->content; ?>
+        </div>
+
+       
+    </body>
+</html>
+
+<script languaje="javascript">
+function limpiarCookie()
+{
+ document.cookie = "appCookie=";
+
+}
+</script>
+
+
+   
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath().'/images/faviconVsys16x16.png'))
+                          ->prependStylesheet($this->basePath('css/main.css'))
+			      
+                          ->prependStylesheet($this->basePath('libs/spinkit/spinkit.css'))
+                          ->prependStylesheet($this->basePath('libs/alertifyjs/css/themes/bootstrap.min.css'))
+                          ->prependStylesheet($this->basePath('libs/alertifyjs/css/alertify.min.css'))
+                          ->prependStylesheet($this->basePath('libs/datatables/extensions/Responsive/css/responsive.bootstrap.min.css'))
+                          ->prependStylesheet($this->basePath('libs/datatables/extensions/Responsive/css/responsive.dataTables.min.css'))
+                          ->prependStylesheet($this->basePath('libs/datatables/media/css/dataTables.bootstrap.min.css'))
+//                          ->prependStylesheet($this->basePath('libs/jquery-ui/jquery-ui.css'))
+                          ->prependStylesheet($this->basePath('libs/font-awesome/css/font-awesome.min.css'))
+                          ->prependStylesheet($this->basePath('libs/bootstrap/css/bootstrap.min.css'))
+//			 ->prependStylesheet($this->basePath('libs/jquery-chosen/css/chosen.css')) 
+//                          ->prependStylesheet($this->basePath('libs/bootstrap-switch/css/bootstrap-switch.css'))
+                          ->prependStylesheet('https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,300,300italic,900,500,500italic,700italic,900italic')
+                ?>
+
+        <!-- Scripts -->
+       <?php
+       echo $this->headScript()  
+                    ->prependFile($this->basePath('libs/alertifyjs/alertify.min.js'))
+                    ->prependFile($this->basePath('libs/jquery-validation/localization/messages_es.min.js'))
+                    ->prependFile($this->basePath('libs/jquery-validation/jquery.validate.js'))            
+//                    ->prependFile($this->basePath('libs/jquery-ui/jquery-ui.min.js'))
+                    ->prependFile($this->basePath('libs/bootstrap/js/bootstrap.min.js'))   
+//		    ->prependFile($this->basePath('libs/jquery-chosen/chosen.jquery.js'))                         
+//                    ->prependFile($this->basePath('libs/bootstrap-switch/js/bootstrap-switch.min.js'))
+                    ->prependFile($this->basePath('libs/datatables/media/js/jquery.dataTables.columnFilter.js'))
+                    ->prependFile($this->basePath('libs/datatables/media/js/dataTables.bootstrap.min.js'))
+                    ->prependFile($this->basePath('libs/datatables/extensions/Responsive/js/responsive.bootstrap.min.js'))
+                    ->prependFile($this->basePath('libs/datatables/extensions/Responsive/js/dataTables.responsive.min.js'))
+                    ->prependFile($this->basePath('libs/datatables/media/js/jquery.dataTables.min.js'))
+                    ->prependFile($this->basePath('libs/prefixfree.min.js'))
+                    ->prependFile($this->basePath('libs/jquery/jquery-1.11.3.min.js'))
+        ; 
+
+

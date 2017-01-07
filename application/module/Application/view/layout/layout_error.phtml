@@ -1,0 +1,39 @@
+<?php echo $this->doctype(); ?>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Auth CUAD')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+            ->prependStylesheet($this->basePath('css/error.css'))
+            ->prependStylesheet($this->basePath('libs/font-awesome/css/font-awesome.min.css'))
+            ->prependStylesheet($this->basePath('libs/bootstrap/css/bootstrap.min.css')); ?>
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $this->content; ?>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('libs/prefixfree.min.js'))
+            ->prependFile($this->basePath('libs/bootstrap/js/bootstrap.min.js'))            
+            ->prependFile($this->basePath('libs/jquery/jquery-1.11.3.min.js'))
+            ->prependFile($this->basePath('libs/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('libs/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',)); ?>
+        
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

@@ -1,0 +1,198 @@
+<div class="row">
+    <div class="page-header">
+        <h3>Asignar aplicaciones por usuario</h3>
+    </div>
+    <form id="formApps" method="POST">
+    
+        <div class="clearfix">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div><label for="user">Usuario</label></div>
+                    <div>                     
+                        <select class="form-control" name="user" id="user" required style="width:50%">
+                            <option value=""> - - Usuario - -</option>
+                           
+                            
+                              <?php 
+                        
+                              foreach ($allUsers as $Users)
+  {
+                                  ?><option value="<?php echo $Users['username'];?>"><?php echo $Users['username'];?></option>
+       
+ <?php }
+?>
+                        </select>
+                    </div>
+                    <div style="clear:both"><span id="erroruser" class="error text-danger"></span></div>
+                </div>
+                
+                <div class="form-group">
+                    <div style="clear:both"><span id="errorsubmit" class="error text-danger"></span></div>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <p>Escriba el usuario al que desee agregar aplicaciones, a continuación seleccione las aplicaciones a las que se le permitirá acceso.</p>
+            </div>
+        </div>
+        
+</div>
+
+<div id="minicontainer" style="clear:both;overflow: hidden;">
+<div id="panelApps" style="width:45%; float: left">
+    <table style="width:95%;">
+                                <?php
+                              
+  foreach ($allApps as $Apps)
+  {
+      $id=1;
+      ?><tr><td>
+        <?php echo $this->escapehtml($Apps['app_name']);
+        ?></td>
+          <td><input type="checkbox" name="checkApps" id="checkbox<?php echo $id;?>" value=" <?php echo $Apps['idApp'];?>"> <td>
+      </tr><?php
+      $id++;
+  }
+?>
+    </table>
+</div>
+    <div class="modal-footer" style="width:45%" style="float:right">
+        <input class="btn btn-primary" type="button" value="Marcar todo" id="marcar" name="marcar" onclick="enableAllChecks();">
+        <input class="btn btn-primary" type="button" value="Desmarcar Todo" id="desmarcar" name="desmarcar" onclick="disableAllChecks();">
+            <input class="btn btn-primary" type="button" value="Guardar" id="Guardar" name="Guardar">
+        </div>
+    </form>
+    
+</div>
+    
+    
+    
+<div id="ark_loader-set-email" class="ark_loader hidden">
+    <span>CARGANDO</span>
+    <span>
+        <div class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+        </div>
+    </span>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script>
+    
+   $( "#Guardar" ).click(function( event ) {
+  //var str = $( "form" ).serialize();
+  
+  if ($( "#user" ).val()=="")
+  {
+     alertify.error('Elija un usuario'); 
+  }
+  
+  else
+  {
+  var Apps=beforeSaveApps();
+  $.ajax({
+                method: "POST",
+                url: "<?php echo $this->url('save-user-apps');?>",
+                data: {
+                    Apps: Apps,
+                    user: $( "#user" ).val()
+                }
+            })
+            .done(function(msg) {
+                alertify.success('Registro guardado ok');
+            });
+
+  }
+  });
+   
+    
+    $("#user").change(function() {
+        clearApps();
+        $.ajax({
+                method: "POST",
+                url: "getuserapps",
+                data: {
+                    user: $("#user").val()
+                }
+            })
+            .done(function(msg) {
+                var largo = msg.usersapps.length;
+                var i = 0;
+                console.log(msg.usersapps);
+                for (i; i < largo; i++) {
+                   enableApps(msg.usersapps[i].app);
+                    //alert(msg.usersapps[i].app_name);
+                }
+
+
+            });
+
+    });
+    
+    
+    
+    function clearApps()
+    {
+        $("input[name=checkApps]").each(function (index) { 
+          $(this).prop("checked", false);   
+        });
+    //return 0;
+    }
+    
+    
+    function enableApps(app){   
+       
+    $("input[name=checkApps]").each(function (index) { 
+        var a=$(this).val();
+        var b=app;
+        //alert (a+" es igual a " +b);
+       if(a.trim() === b.trim()){
+           
+           
+         $(this).prop("checked", "checked");
+       }
+    });
+    //return 0;
+  }
+    
+    function beforeSaveApps()
+    {
+       var Apps="";
+       $("input[name=checkApps]").each(function (index) { 
+        
+        if( $(this).prop('checked') ) {
+    Apps=Apps+$(this).val()+'|';
+}
+    }); 
+    return Apps;
+    }
+    
+    
+    function enableAllChecks()
+    {
+       $("input[name=checkApps]").each(function (index) { 
+        $(this).prop("checked", true);       
+    });  
+        
+    }
+    
+    function disableAllChecks()
+    {
+       $("input[name=checkApps]").each(function (index) { 
+        $(this).prop("checked", false);       
+    });  
+        
+    }
+    
+    
+</script>
